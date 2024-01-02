@@ -3,7 +3,6 @@
 Library for reading data from De Dietrich (or Remeha) PC interface, tested with model mcr3.
 For this we use an ESP8266 (Wemos D1) with ESPHOME software - sample YAML files are in English and Polish.
 
-
 It connects to the boiler using a 4P4C (RJ10) connector with the following pinouts:
 ```
  Heater Board from top       ESP8266

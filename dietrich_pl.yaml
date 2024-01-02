@@ -4,7 +4,7 @@ esphome:
   board: d1_mini
   includes:
     - dietrich.h
-    
+
 wifi:
   ssid: "ssid"
   password: "secret"
@@ -12,7 +12,7 @@ wifi:
 # Enable logging
 logger:
   hardware_uart: UART1
-  
+
 # web server
 web_server:
 
@@ -133,10 +133,10 @@ sensor:
               else if (id(piec_podstatus).state==63) {id(piec_podstatus_txt).publish_state("63:Start anti-cycle timer");}
               else if (id(piec_podstatus).state==255) {id(piec_podstatus_txt).publish_state("255:Reset wait time");}
               else if (id(piec_podstatus).state==999) {id(piec_podstatus_txt).publish_state("999:Unkown Sub-State");}
-        
+
     - name: "Piec lockout"
     - name: "Piec blocking"
-        
+
     - name: "Piec temp. przepływu"
       unit_of_measurement: °C
       accuracy_decimals: 2
@@ -167,7 +167,7 @@ sensor:
     - name: "Piec zadana prędkość wentylatora"
       unit_of_measurement: rpm
       accuracy_decimals: 2  
-    
+
     - name: "Piec prędkość wentylatora"
       unit_of_measurement: rpm
       accuracy_decimals: 2  
@@ -184,14 +184,14 @@ sensor:
     - name: "Piec pump_percentage"
       unit_of_measurement: "%"
       accuracy_decimals: 0  
-    
+
     - name: "Piec desired_max_power"
       unit_of_measurement: "%"
       accuracy_decimals: 0  
     - name: "Piec actual_power"
       unit_of_measurement: "%"
       accuracy_decimals: 0      
-      
+
     - name: "Piec Mod.Controller Connected"
     - name: "Piec Heat demand from Mod.Controller"
     - name: "Piec Heat demand from on/off controller"
@@ -216,7 +216,7 @@ sensor:
     - name: "Piec ilość godzin zasilania"
       unit_of_measurement: h
       accuracy_decimals: 0  
-      
+
     - name: "Piec ilość startów pompy"
       unit_of_measurement: il
       accuracy_decimals: 0
@@ -235,7 +235,7 @@ sensor:
     - name: "Piec ilość awarii płomienia"
       unit_of_measurement: il
       accuracy_decimals: 0
-    
+
     - name: "Piec Ciśnienie wody"
       unit_of_measurement: bar
       accuracy_decimals: 2 
@@ -245,15 +245,14 @@ sensor:
     - name: "Piec natężenie przepływu C.W.U."
       unit_of_measurement: l/m
       accuracy_decimals: 0
-          
+
   - platform: wifi_signal
     name: "Piec WiFi Signal"
     update_interval: 60s
-    
+
   - platform: uptime
     name: "Piec Uptime"  
-      
+
   # - name: "My Custom Pressure Sensor"
   #   unit_of_measurement: hPa
   #   accuracy_decimals: 2
-

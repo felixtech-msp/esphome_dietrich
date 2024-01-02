@@ -4,7 +4,7 @@ esphome:
   board: d1_mini
   includes:
     - dietrich.h
-    
+
 wifi:
   ssid: "ssid"
   password: "secret"
@@ -12,7 +12,7 @@ wifi:
 # Enable logging
 logger:
   hardware_uart: UART1
-  
+
 # web server
 web_server:
 
@@ -134,11 +134,10 @@ sensor:
               else if (id(dietrich_substate).state==255) {id(dietrich_substate_txt).publish_state("255:Reset wait time");}
               else 
                 {id(dietrich_substate_txt).publish_state("999:Unkown Sub-State");}
- 
+
     - name: "Boiler lockout"
     - name: "Boiler blocking"
 
- 
     - name: "Boiler flow temp"
       unit_of_measurement: °C
       accuracy_decimals: 2
@@ -169,11 +168,11 @@ sensor:
     - name: "Boiler setpoint fanspeed"
       unit_of_measurement: rpm
       accuracy_decimals: 2  
-    
+
     - name: "Boiler fanspeed"    
       unit_of_measurement: rpm
       accuracy_decimals: 2  
-    
+
     - name: "Boiler ionisation_current"
       unit_of_measurement: "μA"
       accuracy_decimals: 1  
@@ -186,14 +185,14 @@ sensor:
     - name: "Boiler pump_percentage"
       unit_of_measurement: "%"
       accuracy_decimals: 0  
-  
+
     - name: "Boiler desired_max_power"
       unit_of_measurement: "%"
       accuracy_decimals: 0      
     - name: "Boiler actual_power"
       unit_of_measurement: "%"
       accuracy_decimals: 0  
-  
+
     - name: "Boiler Mod.Controller Connected"
     - name: "Boiler Heat demand from Mod.Controller"
     - name: "Boiler Heat demand from on/off controller"
@@ -202,7 +201,7 @@ sensor:
     - name: "Boiler DHW Blocking"
     - name: "Boiler Anti Legionella"
     - name: "Boiler DHW Heat Demand"
-    
+
     - name: "Boiler hours_run_pump_sensor"
       unit_of_measurement: h
       accuracy_decimals: 0      
@@ -244,10 +243,10 @@ sensor:
     - name: "Boiler dhw_flowrate_sensor"
       unit_of_measurement: l/m
       accuracy_decimals: 0
-    
+
   - platform: wifi_signal
     name: "Boiler WiFi Signal"
     update_interval: 60s
-    
+
   - platform: uptime
-    name: "Boiler Uptime"  
+    name: "Boiler Uptime"
