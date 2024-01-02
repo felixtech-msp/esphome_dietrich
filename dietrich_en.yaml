@@ -41,8 +41,8 @@ sensor:
     lambda: |-
       auto dietrich = new Dietrich(id(uart_bus));
       App.register_component(dietrich);
-      return {dietrich->state_sensor, dietrich->sub_state_sensor, dietrich->lockout_sensor, dietrich->blocking_sensor, 
-        dietrich->flow_temp_sensor, dietrich->return_temp_sensor, dietrich->outside_temp_sensor, dietrich->calorifier_temp_sensor, 
+      return {dietrich->state_sensor, dietrich->sub_state_sensor, dietrich->lockout_sensor, dietrich->blocking_sensor,
+        dietrich->flow_temp_sensor, dietrich->return_temp_sensor, dietrich->outside_temp_sensor, dietrich->calorifier_temp_sensor,
         dietrich->boiler_control_temp_sensor, dietrich->room_temp_sensor, dietrich->ch_setpoint_sensor, dietrich->dhw_setpoint_sensor, dietrich->room_temp_setpoint_sensor,
         dietrich->fan_speed_setpoint_sensor, dietrich->fan_speed_sensor,
         dietrich->ionisation_current_sensor, dietrich->internal_setpoint_sensor, dietrich->available_power_sensor, dietrich->pump_percentage_sensor,
@@ -51,8 +51,8 @@ sensor:
         dietrich->demand_source_bit4_sensor, dietrich->demand_source_bit5_sensor, dietrich->demand_source_bit6_sensor, dietrich->demand_source_bit7_sensor,
         dietrich->hours_run_pump_sensor, dietrich->hours_run_3way_sensor, dietrich->hours_run_ch_sensor, dietrich->hours_run_dhw_sensor,
         dietrich->power_supply_aval_hours_sensor, dietrich->pump_starts_sensor, dietrich->number_of3way_valce_cycles_sensor, dietrich->burner_start_dhw_sensor,
-        dietrich->total_burner_start_sensor, dietrich->failed_burner_start_sensor, dietrich->number_flame_loss_sensor,                 
-        dietrich->hydro_pressure_sensor, dietrich->control_temp_sensor, dietrich->dhw_flowrate_sensor 
+        dietrich->total_burner_start_sensor, dietrich->failed_burner_start_sensor, dietrich->number_flame_loss_sensor,
+        dietrich->hydro_pressure_sensor, dietrich->control_temp_sensor, dietrich->dhw_flowrate_sensor
       };
 
     sensors:
@@ -78,7 +78,7 @@ sensor:
               else if (id(dietrich_state).state==15) {id(dietrich_state_txt).publish_state("15:Manual-heatdemand");}
               else if (id(dietrich_state).state==16) {id(dietrich_state_txt).publish_state("16:Boiler-frost-protection");}
               else if (id(dietrich_state).state==17) {id(dietrich_state_txt).publish_state("17:De-aeration");} //
-              else 
+              else
                 {id(dietrich_state_txt).publish_state("999:Unknown");}
 
     - id: dietrich_substate
@@ -132,7 +132,7 @@ sensor:
               else if (id(dietrich_substate).state==62) {id(dietrich_substate_txt).publish_state("62:Close hydraulic valve");}
               else if (id(dietrich_substate).state==63) {id(dietrich_substate_txt).publish_state("63:Start anti-cycle timer");}
               else if (id(dietrich_substate).state==255) {id(dietrich_substate_txt).publish_state("255:Reset wait time");}
-              else 
+              else
                 {id(dietrich_substate_txt).publish_state("999:Unkown Sub-State");}
 
     - name: "Boiler lockout"
@@ -161,42 +161,42 @@ sensor:
       accuracy_decimals: 2
     - name: "Boiler setpoint DHW"
       unit_of_measurement: °C
-      accuracy_decimals: 2  
+      accuracy_decimals: 2
     - name: "Boiler setpoint room"
       unit_of_measurement: °C
-      accuracy_decimals: 2  
+      accuracy_decimals: 2
     - name: "Boiler setpoint fanspeed"
       unit_of_measurement: rpm
-      accuracy_decimals: 2  
+      accuracy_decimals: 2
 
-    - name: "Boiler fanspeed"    
+    - name: "Boiler fanspeed"
       unit_of_measurement: rpm
-      accuracy_decimals: 2  
+      accuracy_decimals: 2
 
     - name: "Boiler ionisation_current"
       unit_of_measurement: "μA"
-      accuracy_decimals: 1  
+      accuracy_decimals: 1
     - name: "Boiler internal_setpoint"
       unit_of_measurement: "%"
-      accuracy_decimals: 0      
+      accuracy_decimals: 0
     - name: "Boiler available_power"
       unit_of_measurement: "%"
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Boiler pump_percentage"
       unit_of_measurement: "%"
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
 
     - name: "Boiler desired_max_power"
       unit_of_measurement: "%"
-      accuracy_decimals: 0      
+      accuracy_decimals: 0
     - name: "Boiler actual_power"
       unit_of_measurement: "%"
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
 
     - name: "Boiler Mod.Controller Connected"
     - name: "Boiler Heat demand from Mod.Controller"
     - name: "Boiler Heat demand from on/off controller"
-    - name: "Boiler Frost Protection"        
+    - name: "Boiler Frost Protection"
     - name: "Boiler DHW Eco"
     - name: "Boiler DHW Blocking"
     - name: "Boiler Anti Legionella"
@@ -204,22 +204,22 @@ sensor:
 
     - name: "Boiler hours_run_pump_sensor"
       unit_of_measurement: h
-      accuracy_decimals: 0      
+      accuracy_decimals: 0
     - name: "Boiler hours_run_3way_sensor"
       unit_of_measurement: h
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Boiler hours_run_ch_sensor"
       unit_of_measurement: h
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Boiler hours_run_dhw_sensor"
       unit_of_measurement: h
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Boiler power_supply_aval_hours_sensor"
       unit_of_measurement: h
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Boiler pump_starts_sensor"
       unit_of_measurement: count
-      accuracy_decimals: 0    
+      accuracy_decimals: 0
     - name: "Boiler number_of3way_valce_cycles_sensor"
       unit_of_measurement: count
       accuracy_decimals: 0
@@ -232,14 +232,14 @@ sensor:
     - name: "Boiler failed_burner_start_sensor"
       unit_of_measurement: count
       accuracy_decimals: 0
-    - name: "Boiler number_flame_loss_sensor"    
+    - name: "Boiler number_flame_loss_sensor"
 
     - name: "Boiler hydro_pressure_sensor"
       unit_of_measurement: bar
-      accuracy_decimals: 2 
+      accuracy_decimals: 2
     - name: "Boiler control_temp_sensor"
       unit_of_measurement: °C
-      accuracy_decimals: 2 
+      accuracy_decimals: 2
     - name: "Boiler dhw_flowrate_sensor"
       unit_of_measurement: l/m
       accuracy_decimals: 0

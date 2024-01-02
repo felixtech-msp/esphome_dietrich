@@ -41,18 +41,18 @@ sensor:
     lambda: |-
       auto dietrich = new Dietrich(id(uart_bus));
       App.register_component(dietrich);
-      return {dietrich->state_sensor, dietrich->sub_state_sensor, dietrich->lockout_sensor, dietrich->blocking_sensor, 
-        dietrich->flow_temp_sensor, dietrich->return_temp_sensor, dietrich->outside_temp_sensor, dietrich->calorifier_temp_sensor, 
+      return {dietrich->state_sensor, dietrich->sub_state_sensor, dietrich->lockout_sensor, dietrich->blocking_sensor,
+        dietrich->flow_temp_sensor, dietrich->return_temp_sensor, dietrich->outside_temp_sensor, dietrich->calorifier_temp_sensor,
         dietrich->boiler_control_temp_sensor, dietrich->room_temp_sensor, dietrich->ch_setpoint_sensor, dietrich->dhw_setpoint_sensor, dietrich->room_temp_setpoint_sensor,
-        dietrich->fan_speed_setpoint_sensor, dietrich->fan_speed_sensor,                  
+        dietrich->fan_speed_setpoint_sensor, dietrich->fan_speed_sensor,
         dietrich->ionisation_current_sensor, dietrich->internal_setpoint_sensor, dietrich->available_power_sensor, dietrich->pump_percentage_sensor,
         dietrich->desired_max_power_sensor, dietrich->actual_power_sensor,
         dietrich->demand_source_bit0_sensor, dietrich->demand_source_bit1_sensor, dietrich->demand_source_bit2_sensor, dietrich->demand_source_bit3_sensor,
-        dietrich->demand_source_bit4_sensor, dietrich->demand_source_bit5_sensor, dietrich->demand_source_bit6_sensor, dietrich->demand_source_bit7_sensor,      
+        dietrich->demand_source_bit4_sensor, dietrich->demand_source_bit5_sensor, dietrich->demand_source_bit6_sensor, dietrich->demand_source_bit7_sensor,
         dietrich->hours_run_pump_sensor, dietrich->hours_run_3way_sensor, dietrich->hours_run_ch_sensor, dietrich->hours_run_dhw_sensor,
         dietrich->power_supply_aval_hours_sensor, dietrich->pump_starts_sensor, dietrich->number_of3way_valce_cycles_sensor, dietrich->burner_start_dhw_sensor,
-        dietrich->total_burner_start_sensor, dietrich->failed_burner_start_sensor, dietrich->number_flame_loss_sensor,      
-        dietrich->hydro_pressure_sensor, dietrich->control_temp_sensor, dietrich->dhw_flowrate_sensor 
+        dietrich->total_burner_start_sensor, dietrich->failed_burner_start_sensor, dietrich->number_flame_loss_sensor,
+        dietrich->hydro_pressure_sensor, dietrich->control_temp_sensor, dietrich->dhw_flowrate_sensor
       };
 
     sensors:
@@ -78,7 +78,7 @@ sensor:
               else if (id(piec_status).state==15) {id(piec_status_txt).publish_state("15:Manual-heatdemand");}
               else if (id(piec_status).state==16) {id(piec_status_txt).publish_state("16:Zabezpieczenie przed zamarzaniem");} //Boiler-frost-protection
               else if (id(piec_status).state==17) {id(piec_status_txt).publish_state("17:Odpowietrzanie");} //De-aeration
-              else 
+              else
                 {id(piec_status_txt).publish_state("999:Unknown");}
 
     - id: piec_podstatus
@@ -160,42 +160,42 @@ sensor:
       accuracy_decimals: 2
     - name: "Piec zadana temp. CWU"
       unit_of_measurement: °C
-      accuracy_decimals: 2  
+      accuracy_decimals: 2
     - name: "Piec zadana temp. pomieszczenia"
       unit_of_measurement: °C
-      accuracy_decimals: 2  
+      accuracy_decimals: 2
     - name: "Piec zadana prędkość wentylatora"
       unit_of_measurement: rpm
-      accuracy_decimals: 2  
+      accuracy_decimals: 2
 
     - name: "Piec prędkość wentylatora"
       unit_of_measurement: rpm
-      accuracy_decimals: 2  
+      accuracy_decimals: 2
 
     - name: "Piec prąd jonizacji"
       unit_of_measurement: "μA"
-      accuracy_decimals: 1  
+      accuracy_decimals: 1
     - name: "Piec wewnętrzna wartość zadana"
       unit_of_measurement: "%"
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Piec available_power"
       unit_of_measurement: "%"
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Piec pump_percentage"
       unit_of_measurement: "%"
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
 
     - name: "Piec desired_max_power"
       unit_of_measurement: "%"
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Piec actual_power"
       unit_of_measurement: "%"
-      accuracy_decimals: 0      
+      accuracy_decimals: 0
 
     - name: "Piec Mod.Controller Connected"
     - name: "Piec Heat demand from Mod.Controller"
     - name: "Piec Heat demand from on/off controller"
-    - name: "Piec Frost Protection"        
+    - name: "Piec Frost Protection"
     - name: "Piec DHW Eco"
     - name: "Piec DHW Blocking"
     - name: "Piec Anti Legionella"
@@ -203,19 +203,19 @@ sensor:
 
     - name: "Piec ilość godzin pracy pompy"
       unit_of_measurement: h
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Piec ilość godzin pracy zaworu trójdrożnego"
       unit_of_measurement: h
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Piec ilość godzin pracy"
       unit_of_measurement: h
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Piec ilość godzin pracy c.w.u."
       unit_of_measurement: h
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
     - name: "Piec ilość godzin zasilania"
       unit_of_measurement: h
-      accuracy_decimals: 0  
+      accuracy_decimals: 0
 
     - name: "Piec ilość startów pompy"
       unit_of_measurement: il
@@ -238,10 +238,10 @@ sensor:
 
     - name: "Piec Ciśnienie wody"
       unit_of_measurement: bar
-      accuracy_decimals: 2 
+      accuracy_decimals: 2
     - name: "Piec kontrola temp."
       unit_of_measurement: °C
-      accuracy_decimals: 2 
+      accuracy_decimals: 2
     - name: "Piec natężenie przepływu C.W.U."
       unit_of_measurement: l/m
       accuracy_decimals: 0
@@ -251,7 +251,7 @@ sensor:
     update_interval: 60s
 
   - platform: uptime
-    name: "Piec Uptime"  
+    name: "Piec Uptime"
 
   # - name: "My Custom Pressure Sensor"
   #   unit_of_measurement: hPa
