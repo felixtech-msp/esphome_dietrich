@@ -177,7 +177,7 @@ public:
         delay(100); // delay for esphome to not disconnect api
 
         if (!ionisation_current_sensor->get_name().empty())
-          ionisation_current_sensor->publish_state(readdata[32]);
+          ionisation_current_sensor->publish_state(signedFloat(readdata[32]) * 0.1);
         delay(100); // delay for esphome to not disconnect api
 
         if (!internal_setpoint_sensor->get_name().empty())
