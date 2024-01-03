@@ -1,0 +1,243 @@
+esphome:
+  name: uart_dietrich
+  platform: ESP8266
+  board: d1_mini
+  includes:
+    - dietrich.h
+
+wifi:
+  ssid: "ssid"
+  password: "secret"
+
+# Enable logging
+logger:
+  hardware_uart: UART1
+
+# web server
+web_server:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+uart:
+  id: uart_bus
+  baud_rate: 9600
+  tx_pin: GPIO1
+  rx_pin: GPIO3
+  # stop_bits: 1
+
+text_sensor:
+  - platform: template
+    id: dietrich_state_txt
+    name: "Kessel Status"
+  - platform: template
+    id: dietrich_substate_txt
+    name: "Kessel Sub-Status"
+
+sensor:
+  - platform: custom
+    lambda: |-
+      auto dietrich = new Dietrich(id(uart_bus));
+      App.register_component(dietrich);
+      return {dietrich->state_sensor, dietrich->sub_state_sensor, dietrich->lockout_sensor, dietrich->blocking_sensor,
+        dietrich->flow_temp_sensor, dietrich->return_temp_sensor, dietrich->outside_temp_sensor, dietrich->calorifier_temp_sensor,
+        dietrich->boiler_control_temp_sensor, dietrich->room_temp_sensor, dietrich->ch_setpoint_sensor, dietrich->dhw_setpoint_sensor, dietrich->room_temp_setpoint_sensor,
+        dietrich->fan_speed_setpoint_sensor, dietrich->fan_speed_sensor,
+        dietrich->ionisation_current_sensor, dietrich->internal_setpoint_sensor, dietrich->available_power_sensor, dietrich->pump_percentage_sensor,
+        dietrich->desired_max_power_sensor, dietrich->actual_power_sensor,
+        dietrich->demand_source_bit0_sensor, dietrich->demand_source_bit1_sensor, dietrich->demand_source_bit2_sensor, dietrich->demand_source_bit3_sensor,
+        dietrich->demand_source_bit4_sensor, dietrich->demand_source_bit5_sensor, dietrich->demand_source_bit6_sensor, dietrich->demand_source_bit7_sensor,
+        dietrich->hours_run_pump_sensor, dietrich->hours_run_3way_sensor, dietrich->hours_run_ch_sensor, dietrich->hours_run_dhw_sensor,
+        dietrich->power_supply_aval_hours_sensor, dietrich->pump_starts_sensor, dietrich->number_of3way_valce_cycles_sensor, dietrich->burner_start_dhw_sensor,
+        dietrich->total_burner_start_sensor, dietrich->failed_burner_start_sensor, dietrich->number_flame_loss_sensor,
+        dietrich->hydro_pressure_sensor, dietrich->control_temp_sensor, dietrich->dhw_flowrate_sensor
+      };
+
+    sensors:
+    - id: dietrich_state
+      on_value:
+        then:
+          - lambda: |-
+              if (id(dietrich_state).state==0) {id(dietrich_state_txt).publish_state("0:Standby");}
+              else if (id(dietrich_state).state==1) {id(dietrich_state_txt).publish_state("1:Kessel Start");}
+              else if (id(dietrich_state).state==2) {id(dietrich_state_txt).publish_state("2:Brenner Start");}
+              else if (id(dietrich_state).state==3) {id(dietrich_state_txt).publish_state("3:Aktiv Heizung");}
+              else if (id(dietrich_state).state==4) {id(dietrich_state_txt).publish_state("4:Aktiv Warmwasser");}
+              else if (id(dietrich_state).state==5) {id(dietrich_state_txt).publish_state("5:Brenner Stop");}
+              else if (id(dietrich_state).state==6) {id(dietrich_state_txt).publish_state("6:Kessel Stop");}
+              else if (id(dietrich_state).state==7) {id(dietrich_state_txt).publish_state("7:-");}
+              else if (id(dietrich_state).state==8) {id(dietrich_state_txt).publish_state("8:Kontrollierter Stop");}
+              else if (id(dietrich_state).state==9) {id(dietrich_state_txt).publish_state("9:Blockiermodus");}
+              else if (id(dietrich_state).state==10) {id(dietrich_state_txt).publish_state("10:Sperrmodus");}
+              else if (id(dietrich_state).state==11) {id(dietrich_state_txt).publish_state("11:Schornsteim Modus L");}
+              else if (id(dietrich_state).state==12) {id(dietrich_state_txt).publish_state("12:Schornsteim Modus h");}
+              else if (id(dietrich_state).state==13) {id(dietrich_state_txt).publish_state("13:Schornsteim Modus H");}
+              else if (id(dietrich_state).state==14) {id(dietrich_state_txt).publish_state("14:-");}
+              else if (id(dietrich_state).state==15) {id(dietrich_state_txt).publish_state("15:manuelle Heizanforderung");}
+              else if (id(dietrich_state).state==16) {id(dietrich_state_txt).publish_state("16:Frostschutz aktiv");}
+              else if (id(dietrich_state).state==17) {id(dietrich_state_txt).publish_state("17:Entlüftung läuft");} //
+              else
+                {id(dietrich_state_txt).publish_state("999:Unknown");}
+
+    - id: dietrich_substate
+      on_value:
+        then:
+          - lambda: |-
+              if (id(dietrich_substate).state==0) {id(dietrich_substate_txt).publish_state("0:Standby");}
+              else if (id(dietrich_substate).state==1) {id(dietrich_substate_txt).publish_state("1:Rohrleitung undicht!");}
+              else if (id(dietrich_substate).state==2) {id(dietrich_substate_txt).publish_state("2:Ventil öffnet");}
+              else if (id(dietrich_substate).state==3) {id(dietrich_substate_txt).publish_state("3:Pumpe startet");}
+              else if (id(dietrich_substate).state==4) {id(dietrich_substate_txt).publish_state("4:Waren auf Brenner-Start");}
+              else if (id(dietrich_substate).state==5) {id(dietrich_substate_txt).publish_state("5:-");}
+              else if (id(dietrich_substate).state==6) {id(dietrich_substate_txt).publish_state("6:-");}
+              else if (id(dietrich_substate).state==7) {id(dietrich_substate_txt).publish_state("7:-");}
+              else if (id(dietrich_substate).state==8) {id(dietrich_substate_txt).publish_state("8:-");}
+              else if (id(dietrich_substate).state==9) {id(dietrich_substate_txt).publish_state("9:-");}
+              else if (id(dietrich_substate).state==10) {id(dietrich_substate_txt).publish_state("10:Gasventil öffnet");}
+              else if (id(dietrich_substate).state==11) {id(dietrich_substate_txt).publish_state("11:Abgaslüfter startet");}
+              else if (id(dietrich_substate).state==12) {id(dietrich_substate_txt).publish_state("12:Abgasventil öffnet");}
+              else if (id(dietrich_substate).state==13) {id(dietrich_substate_txt).publish_state("13:Brenner-Vorbereitung");}
+              else if (id(dietrich_substate).state==14) {id(dietrich_substate_txt).publish_state("14:Warten auf Freigabe");}
+              else if (id(dietrich_substate).state==15) {id(dietrich_substate_txt).publish_state("15:Brenner startet");}
+              else if (id(dietrich_substate).state==16) {id(dietrich_substate_txt).publish_state("16:VPS Test");}
+              else if (id(dietrich_substate).state==17) {id(dietrich_substate_txt).publish_state("17:Zündvorbereitung");}
+              else if (id(dietrich_substate).state==18) {id(dietrich_substate_txt).publish_state("18:Zündung");}
+              else if (id(dietrich_substate).state==19) {id(dietrich_substate_txt).publish_state("19:Flammenprüfung");}
+              else if (id(dietrich_substate).state==20) {id(dietrich_substate_txt).publish_state("20:Brenner Interpurge-Modus");}
+              else if (id(dietrich_substate).state==30) {id(dietrich_substate_txt).publish_state("30:Normaler interer Zielpunkt");}
+              else if (id(dietrich_substate).state==31) {id(dietrich_substate_txt).publish_state("31:eingeschränkter interner Zielpunkt");}
+              else if (id(dietrich_substate).state==32) {id(dietrich_substate_txt).publish_state("32:Normale Leistungskontrolle");}
+              else if (id(dietrich_substate).state==33) {id(dietrich_substate_txt).publish_state("33:Differenzkontrolle 1");}
+              else if (id(dietrich_substate).state==34) {id(dietrich_substate_txt).publish_state("34:Differenzkontrolle 2");}
+              else if (id(dietrich_substate).state==35) {id(dietrich_substate_txt).publish_state("35:Differenzkontrolle 3");}
+              else if (id(dietrich_substate).state==36) {id(dietrich_substate_txt).publish_state("36:Flammenschutz");}
+              else if (id(dietrich_substate).state==37) {id(dietrich_substate_txt).publish_state("37:Stabilisierung");}
+              else if (id(dietrich_substate).state==38) {id(dietrich_substate_txt).publish_state("38:Kaltstart");}
+              else if (id(dietrich_substate).state==39) {id(dietrich_substate_txt).publish_state("39:eingeschränkte Leistung");}
+              else if (id(dietrich_substate).state==40) {id(dietrich_substate_txt).publish_state("40:Brenner stoppt");}
+              else if (id(dietrich_substate).state==41) {id(dietrich_substate_txt).publish_state("41:Brenner entlüften");}
+              else if (id(dietrich_substate).state==42) {id(dietrich_substate_txt).publish_state("42:Abgaslüfter stoppt");}
+              else if (id(dietrich_substate).state==43) {id(dietrich_substate_txt).publish_state("43:Abgasventil schließt");}
+              else if (id(dietrich_substate).state==44) {id(dietrich_substate_txt).publish_state("44:Lüfter stoppt");}
+              else if (id(dietrich_substate).state==45) {id(dietrich_substate_txt).publish_state("45:Gasventil schließt");}
+              else if (id(dietrich_substate).state==46) {id(dietrich_substate_txt).publish_state("46:-");}
+              else if (id(dietrich_substate).state==47) {id(dietrich_substate_txt).publish_state("47:-");}
+              else if (id(dietrich_substate).state==48) {id(dietrich_substate_txt).publish_state("48:-");}
+              else if (id(dietrich_substate).state==49) {id(dietrich_substate_txt).publish_state("49:-");}
+              else if (id(dietrich_substate).state==39) {id(dietrich_substate_txt).publish_state("39:Wärmetauscher-Schutzmodus");}
+              else if (id(dietrich_substate).state==60) {id(dietrich_substate_txt).publish_state("60:Pumpe fährt herunter");}
+              else if (id(dietrich_substate).state==61) {id(dietrich_substate_txt).publish_state("61:Pumpe stoppt");}
+              else if (id(dietrich_substate).state==62) {id(dietrich_substate_txt).publish_state("62:Ventil schließt");}
+              else if (id(dietrich_substate).state==63) {id(dietrich_substate_txt).publish_state("63:Undichtigkeitserkennung läuft");}
+              else if (id(dietrich_substate).state==255) {id(dietrich_substate_txt).publish_state("255:Zurücksetzen der Wartezeit");}
+              else
+                {id(dietrich_substate_txt).publish_state("999:Unbekannter Sub-Status");}
+
+    - name: "Kessel gesperrt"
+    - name: "Kessel blockiert"
+
+    - name: "Vorlauf Temperatur"
+      unit_of_measurement: °C
+      accuracy_decimals: 2
+    - name: "Rücklauf Temperatur"
+      unit_of_measurement: °C
+      accuracy_decimals: 2
+    - name: "Außentemperatur"
+      unit_of_measurement: °C
+      accuracy_decimals: 2
+    - name: "Wärmetauscher Temperatur"
+      unit_of_measurement: °C
+      accuracy_decimals: 2
+    - name: "Kontrolltemperatur"
+      unit_of_measurement: °C
+      accuracy_decimals: 2
+    - name: "Raumtemperatur"
+      unit_of_measurement: °C
+      accuracy_decimals: 2
+    - name: "Soll-Temperatur Heizung"
+      unit_of_measurement: °C
+      accuracy_decimals: 2
+    - name: "Soll-Temperatur Wasser"
+      unit_of_measurement: °C
+      accuracy_decimals: 2
+    - name: "Soll-Temperatur Raum"
+      unit_of_measurement: °C
+      accuracy_decimals: 2
+    - name: "Soll-Lüfterdrehzahl"
+      unit_of_measurement: "U/min"
+      accuracy_decimals: 2
+    - name: "Lüfterdrehzahl"
+      unit_of_measurement: "U/min"
+      accuracy_decimals: 2
+    - name: "Ionisierungsstrom"
+      unit_of_measurement: "μA"
+      accuracy_decimals: 1
+    - name: "interner Zielpunkt"
+      unit_of_measurement: "%"
+      accuracy_decimals: 0
+    - name: "verfügbare Leistung"
+      unit_of_measurement: "%"
+      accuracy_decimals: 0
+    - name: "Pumpenleistung"
+      unit_of_measurement: "%"
+      accuracy_decimals: 0
+    - name: "Soll-Leistung"
+      unit_of_measurement: "%"
+      accuracy_decimals: 0
+    - name: "Ist-Leistung"
+      unit_of_measurement: "%"
+      accuracy_decimals: 0
+
+    - name: "Mod. Steuerung verbunden"
+    - name: "Heizanforderung von Mod. Steuerung"
+    - name: "Heizanforderung von ein/aus Steuerung"
+    - name: "Frostschutz"
+    - name: "Wasser Eco"
+    - name: "Wasserheizung blockiert"
+    - name: "Anti-Legionellen"
+    - name: "Wasser Heizanforderung"
+
+    - name: "Betriebsstunden Pumpe"
+      unit_of_measurement: h
+      accuracy_decimals: 0
+    - name: "Betriebsstunden 3-Weg-Ventil Wasser"
+      unit_of_measurement: h
+      accuracy_decimals: 0
+    - name: "Betriebsstunden gesamt"
+      unit_of_measurement: h
+      accuracy_decimals: 0
+    - name: "Betriebsstunden Wasser"
+      unit_of_measurement: h
+      accuracy_decimals: 0
+    - name: "verfügbare Zeit Netzteil"
+      unit_of_measurement: h
+      accuracy_decimals: 0
+    - name: "Anzahl Pumpenstarts"
+      accuracy_decimals: 0
+    - name: "Anzahl 3-Weg-Ventil Umschaltungen"
+      accuracy_decimals: 0
+    - name: "Anzahl Brenner-Starts Heizung"
+      accuracy_decimals: 0
+    - name: "Anzahl Brenner-Starts gesamt"
+      accuracy_decimals: 0
+    - name: "Anzahl fehlgeschlagene Brenner-Starts"
+      accuracy_decimals: 0
+    - name: "Anzahl Flameout-Vorfälle"
+    - name: "Wasserdruck"
+      unit_of_measurement: bar
+      accuracy_decimals: 2
+    - name: "Kontrolltemperatur"
+      unit_of_measurement: °C
+      accuracy_decimals: 2
+    - name: "Durchfluss Wasser"
+      unit_of_measurement: l/m
+      accuracy_decimals: 0
+
+  - platform: wifi_signal
+    name: "WLAN Signal"
+    update_interval: 60s
+
+  - platform: uptime
+    name: "Uptime"
