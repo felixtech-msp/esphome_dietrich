@@ -165,19 +165,19 @@ sensor:
     - name: "Soll-Temperatur Raum"
       unit_of_measurement: °C
       accuracy_decimals: 2
-    - name: "Soll-Lüfterdrehzahl"
+    - name: "Soll-Gebläsedrehzahl"
       unit_of_measurement: "U/min"
       accuracy_decimals: 2
-    - name: "Lüfterdrehzahl"
+    - name: "Gebläsedrehzahl"
       unit_of_measurement: "U/min"
       accuracy_decimals: 2
-    - name: "Ionisierungsstrom"
+    - name: "Ionisationsstrom"
       unit_of_measurement: "μA"
       accuracy_decimals: 1
-    - name: "interner Zielpunkt"
+    - name: "Interner Sollwert"
       unit_of_measurement: "%"
       accuracy_decimals: 0
-    - name: "verfügbare Leistung"
+    - name: "Verfügbare Leistung"
       unit_of_measurement: "%"
       accuracy_decimals: 0
     - name: "Pumpenleistung"
@@ -197,12 +197,12 @@ sensor:
     - name: "Wasser Eco"
     - name: "Wasserheizung blockiert"
     - name: "Anti-Legionellen"
-    - name: "Wasser Heizanforderung"
+    - name: "WW-Anforderung"
 
     - name: "Betriebsstunden Pumpe"
       unit_of_measurement: h
       accuracy_decimals: 0
-    - name: "Betriebsstunden 3-Weg-Ventil Wasser"
+    - name: "Betriebsstunden Dreiwegeventil Wasser"
       unit_of_measurement: h
       accuracy_decimals: 0
     - name: "Betriebsstunden gesamt"
@@ -216,7 +216,7 @@ sensor:
       accuracy_decimals: 0
     - name: "Anzahl Pumpenstarts"
       accuracy_decimals: 0
-    - name: "Anzahl 3-Weg-Ventil Umschaltungen"
+    - name: "Anzahl Dreiwegeventil Umschaltungen"
       accuracy_decimals: 0
     - name: "Anzahl Brenner-Starts Heizung"
       accuracy_decimals: 0
